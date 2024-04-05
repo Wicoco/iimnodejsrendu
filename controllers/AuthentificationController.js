@@ -1,3 +1,4 @@
+const prisma = require("../config/prisma");
 const { comparePassword } = require("../utils/bcrypt");
 const { generateAccessToken } = require("../utils/jwt");
 
