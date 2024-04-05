@@ -14,8 +14,14 @@ class UsersController {
     const body = req.body;
 
     try {
+      const encryptedPassword = await hashPassword(body.password);
+
       const user = await prisma.user.create({
-        data: body,
+        data: {
+          email: body.email,
+          name: body.name,
+          password: encryptedPassword,
+        },
       });
       return res.status(201).json(user);
     } catch (e) {

@@ -1,9 +1,26 @@
+const { comparePassword } = require("../utils/bcrypt");
 const { generateAccessToken } = require("../utils/jwt");
 
 class AuthentificationController {
   async login(req, res) {
     try {
       const body = req.body;
+
+      const user = await prisma.user.findUnique({
+        where: {
+          email: body.email,
+        },
+      });
+
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      const isSamePassword = await comparePassword(
+        body.password,
+        user.password
+      );
+
+      if (!isSamePassword)
+        return res.status(401).json({ message: "Invalid password" });
 
       const token = generateAccessToken(body.email);
 
