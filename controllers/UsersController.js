@@ -1,5 +1,5 @@
 const prisma = require("../config/prisma");
-
+const { hashPassword, comparePassword } = require("../utils/bcrypt");
 class UsersController {
   async index(req, res) {
     try {
@@ -11,8 +11,9 @@ class UsersController {
   }
 
   async store(req, res) {
+    const body = req.body;
+
     try {
-      const body = req.body;
       const user = await prisma.user.create({
         data: body,
       });
@@ -22,42 +23,69 @@ class UsersController {
     }
   }
 
-  show(req, res) {
-    const id = req.params.id;
-    const user = users.find((user) => user.id === Number(id));
+  async show(req, res) {
+    try {
+      const id = req.params.id;
+      const user = await prisma.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      return res.status(200).json(user);
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
     }
-
-    return res.json(user);
   }
 
-  update(req, res) {
-    const id = req.params.id;
-    const body = req.body;
-    const user = users.find((user) => user.id === Number(id));
+  async update(req, res) {
+    try {
+      const id = req.params.id;
+      const body = req.body;
+      const user = await prisma.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: Number(id),
+        },
+        data: body,
+      });
+
+      return res.status(200).json(updatedUser);
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
     }
-
-    user.name = body.name;
-
-    return res.json(user);
   }
 
-  delete(req, res) {
-    const id = req.params.id;
-    const user = users.find((user) => user.id === Number(id));
+  async delete(req, res) {
+    try {
+      const id = req.params.id;
+      const user = await prisma.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      await prisma.user.delete({
+        where: {
+          id: Number(id),
+        },
+      });
+
+      return res.status(204).json();
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
     }
-
-    users = users.filter((user) => user.id !== Number(id));
-
-    return res.json(user);
   }
 }
 
