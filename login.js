@@ -1,31 +1,38 @@
-document
-  .getElementById("loginForm")
-  .addEventListener("submit", async function (event) {
+document.addEventListener("DOMContentLoaded", function () {
+  const formulaire = document.getElementById("connexion-form");
+  formulaire.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const response = await fetch("http://127.0.0.1:3000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    });
+    try {
+      const response = await fetch("http://127.0.0.1:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
 
-    if (response.ok) {
       const result = await response.json();
-      const token = result.token;
-      localStorage.setItem("token", token);
-      // Redirection vers la page de profil après la connexion réussie
-      location.href = "login.html";
-    } else {
-      // Gestion des erreurs de connexion
-      console.error("Erreur de connexion:", response.statusText);
-      // Afficher un message d'erreur à l'utilisateur
+
+      if (response.status === 200) {
+        console.log("Connexion réussie");
+        const token = result.token;
+        localStorage.setItem("token", token);
+
+       window.location.href = "/dashboard";
+      } else {
+        console.error("erreur d'identifiant:", result.message);
+
+        alert("Mauvais identifiant ou mot de passe");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la connexion:", error);
     }
   });
+});
