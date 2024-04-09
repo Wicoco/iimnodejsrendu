@@ -43,25 +43,28 @@
           </div>
 
         </header>
-
+<main>
     <!-- formulaire connexion inscription -->    
-<div class="formu">
-    <form id="loginForm" class="form" action="login.html" method="post">
-        <label for="email"></label>
-        <input type="email" name="email" placeholder="Email" id="email" class="username input" required>
+<form method="post" id="inscription-form">
+
+            <label for="name">Name:</label>
+            <input type="text" name="name" placeholder="Name" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" placeholder="Email" id="email" required>
         
-        <label for="password"></label>
-        <input type="password" name="password" placeholder="Password" id="password" class="password input" required>
-        
-        <button class="btn" type="submit">Login</button>
-        <a href="page3.html" id="login_link"></a>
-    </form>
-</div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password" id="password" required>
+                    
+            <input id="send" type="submit" value="Create" >
+        </form>
+
+        <a id="login_link" href="page3.html">Vous avez deja un compte</a>
 
 
 
-
-
+<script src="createlogin.js"></script>
+</main>
 
 
 

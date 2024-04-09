@@ -43,23 +43,22 @@
           </div>
 
         </header>
-
+<main>
     <!-- formulaire connexion inscription -->    
-<div class="formu">
-    <form id="loginForm" class="form" action="login.html" method="post">
-        <label for="email"></label>
-        <input type="email" name="email" placeholder="Email" id="email" class="username input" required>
+ <form method="post" id="connexion-form">
+            <label for="email">Email:</label>
+            <input type="email" name="email" placeholder="Email" id="email" required>
         
-        <label for="password"></label>
-        <input type="password" name="password" placeholder="Password" id="password" class="password input" required>
-        
-        <button class="btn" type="submit">Login</button>
-        <a href="login.html" id="login_link"></a>
-    </form>
-</div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password" id="password" required>
+                    
+            <input type="submit" value="Login" id="send">
+        </form>
 
+        <a href="login.html" id="login_link">Creer un compte</a>
 
-
+ <script src="login.js"></script>
+</main>
 <!-- Footer section -->
         <div class="footer">
           <div class="contain">
