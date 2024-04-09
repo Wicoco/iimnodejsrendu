@@ -1,0 +1,35 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.chara {
+  width: 300px;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.chara img {
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  color: #333;
+  font-size: 18px;
+  margin: 10px 0;
+}
